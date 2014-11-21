@@ -93,6 +93,7 @@
     _mainThreadObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_mainThreadObjectContext setParentContext:_backgroundSaveObjectContext];
     [_mainThreadObjectContext setStalenessInterval:0];
+    self.mainThreadObservesChanges = YES;
 }
 
 -(id)initWithManagedObjectModelName:(NSString*)momName databaseName:(NSString*)databaseName canDeleteOnFail:(BOOL)deletable
