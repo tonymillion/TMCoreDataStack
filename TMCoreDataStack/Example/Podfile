@@ -1,0 +1,8 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+
+target 'TMCoreDataStack', :exclusive => true do
+  pod "TMCoreDataStack", :path => "../"
+
+  
+end

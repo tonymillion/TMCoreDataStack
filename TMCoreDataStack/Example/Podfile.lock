@@ -1,0 +1,14 @@
+PODS:
+  - TMCoreDataStack (0.1.0)
+
+DEPENDENCIES:
+  - TMCoreDataStack (from `../`)
+
+EXTERNAL SOURCES:
+  TMCoreDataStack:
+    :path: ../
+
+SPEC CHECKSUMS:
+  TMCoreDataStack: 0b83e3c6c9092ce02e77247c28662d14d38c8f62
+
+COCOAPODS: 0.34.2
