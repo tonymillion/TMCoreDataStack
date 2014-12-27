@@ -17,11 +17,11 @@ The whole rationale behind TMCoreDataStack is that 99% of the hard work can be d
 
 TMCoreDataStack has been designed for iOS7 upwards taking advantage of all the recent updates CoreData has received, specifically block-based concurrency.
 
-*So, how does it work?*
+_*So, how does it work?*_
 
-*Categories*
+_*Categories*_
 
-*Summary*
+_*Summary*_
 
 ## Requirements
 
