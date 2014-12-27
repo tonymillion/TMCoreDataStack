@@ -90,7 +90,7 @@
 
 +(NSFetchRequest *)createFetchRequest
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass(self)];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:[self entityName]];
 
     return request;
 }
@@ -384,7 +384,13 @@
 {
     if(observe)
     {
-        // This will pull down changes made into the primary context into our UI context.
+        // This will pull down changes made into the parent context into this context.
+        // its a bad idea to use this on the main thread as new objects you save will bounce up
+        // to the save context and then be reflected back down, this may cause "duplicate" objects to
+        // appear in the main thread context - upon restarting the app the duplicates will disappear
+        // this is because the save context gives the 'new' objects a permenent ID which is not
+        // reflected into the main thread contextx temporary id
+        // I have no idea why.
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(contextDidSave:)
                                                      name:NSManagedObjectContextDidSaveNotification
