@@ -87,13 +87,10 @@
     //TODO: create this dynamically
     _backgroundSaveObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [_backgroundSaveObjectContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
-    [_backgroundSaveObjectContext setStalenessInterval:0];
 
     //TODO: also create this dynamically
     _mainThreadObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_mainThreadObjectContext setParentContext:_backgroundSaveObjectContext];
-    [_mainThreadObjectContext setStalenessInterval:0];
-    self.mainThreadObservesChanges = YES;
 }
 
 -(id)initWithManagedObjectModelName:(NSString*)momName databaseName:(NSString*)databaseName canDeleteOnFail:(BOOL)deletable
@@ -202,14 +199,6 @@
     }
 
     return storeDirectoryURL;
-}
-
-#pragma mark - changeObservation
-
--(void)setMainThreadObservesChanges:(BOOL)mainThreadObservesChanges
-{
-    _mainThreadObservesChanges = mainThreadObservesChanges;
-    [_mainThreadObjectContext observeChangesFromParent:self.mainThreadObservesChanges];
 }
 
 @end

@@ -20,8 +20,6 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator    *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSPersistentStore               *persistentStore;
 
-@property (assign, nonatomic) BOOL  mainThreadObservesChanges;
-
 -(id)initWithManagedObjectModelName:(NSString*)momName databaseName:(NSString*)databaseName canDeleteOnFail:(BOOL)deletable;
 -(id)initWithManagedObjectModel:(NSManagedObjectModel*)model databaseName:(NSString*)databaseName canDeleteOnFail:(BOOL)deletable;
 
