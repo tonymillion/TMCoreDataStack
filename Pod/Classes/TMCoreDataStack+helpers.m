@@ -55,7 +55,9 @@
 
 -(void)deleteManagedObject
 {
-    [self.managedObjectContext deleteObject:self];
+    [self.managedObjectContext performBlockAndWait:^{
+        [self.managedObjectContext deleteObject:self];
+    }];
 }
 
 #pragma mark - context<>context
@@ -147,14 +149,19 @@
 
 +(NSArray*)allObjectsInContext:(NSManagedObjectContext *)context
 {
-    NSError * err = nil;
+    __block NSError * err = nil;
+    __block NSArray * results = nil;
 
-    NSArray * results = [context executeFetchRequest:[self createFetchRequest]
-                                               error:&err];
+    [context performBlockAndWait:^{
+        results = [context executeFetchRequest:[self createFetchRequest]
+                                                   error:&err];
+    }];
+
     if(err)
     {
         return nil;
     }
+
     return results;
 }
 
@@ -351,30 +358,17 @@
 
 -(void)performBlockAndSave:(void (^)(NSManagedObjectContext *context))block
 {
-    __block UIBackgroundTaskIdentifier taskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        [[UIApplication sharedApplication] endBackgroundTask:taskID];
-    }];
-
     [self performBlock:^{
         block(self);
         [self recursiveSave];
-
-        [[UIApplication sharedApplication] endBackgroundTask:taskID];
-
     }];
 }
 
 -(void)performBlockAndWaitAndSave:(void (^)(NSManagedObjectContext *context))block
 {
-    __block UIBackgroundTaskIdentifier taskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        [[UIApplication sharedApplication] endBackgroundTask:taskID];
-    }];
-
     [self performBlockAndWait:^{
         block(self);
         [self recursiveSave];
-
-        [[UIApplication sharedApplication] endBackgroundTask:taskID];
     }];
 }
 
