@@ -16,6 +16,7 @@
 #endif
 
 #import "NSManagedObject+helpers.h"
+#import "NSManagedObject+importing.h"
 #import "NSManagedObjectContext+helpers.h"
 
 @interface TMCoreDataStack : NSObject
