@@ -6,4 +6,4 @@
 //  Copyright (c) 2014 Tony Million. All rights reserved.
 //
 
-${TEST_EXAMPLE}
+//${TEST_EXAMPLE}

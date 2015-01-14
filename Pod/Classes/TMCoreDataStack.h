@@ -9,7 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-#import "TMCoreDataStack+helpers.h"
+#if DEBUG
+#	define CDLog(_format, ...) NSLog(_format, ##__VA_ARGS__)
+#else
+#	define CDLog(_format, ...)
+#endif
+
+#import "NSManagedObject+helpers.h"
+#import "NSManagedObjectContext+helpers.h"
 
 @interface TMCoreDataStack : NSObject
 
