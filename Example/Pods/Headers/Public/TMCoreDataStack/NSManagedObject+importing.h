@@ -1,0 +1,1 @@
+../../../../../Pod/Classes/NSManagedObject+importing.h
