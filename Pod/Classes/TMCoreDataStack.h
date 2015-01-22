@@ -28,6 +28,7 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator    *persistentStoreCoordinator;
 
 @property (assign) BOOL canFailToMemoryContext;
+@property (assign) BOOL canDeleteOnFail;
 
 -(id)initWithManagedObjectModelName:(NSString*)momName databaseName:(NSString*)databaseName canDeleteOnFail:(BOOL)deletable;
 -(id)initWithManagedObjectModel:(NSManagedObjectModel*)model databaseName:(NSString*)databaseName canDeleteOnFail:(BOOL)deletable;

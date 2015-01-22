@@ -17,7 +17,6 @@
 @property (readwrite, strong, nonatomic) NSPersistentStoreCoordinator    *persistentStoreCoordinator;
 @property (readwrite, strong, nonatomic) NSPersistentStore               *persistentStore;
 
-@property(assign, nonatomic) BOOL canDeleteOnFail;
 @property(strong,nonatomic) NSString * databaseName;
 
 @end
@@ -85,6 +84,7 @@
     {
         if(self.canDeleteOnFail)
         {
+            CDLog(@"Deleting store: %@", storeURL);
             // there was an error creating the persistent store, try deleting it and recreating the file
             [[NSFileManager defaultManager] removeItemAtURL:storeURL
                                                       error:nil];
@@ -100,7 +100,7 @@
                 _persistentStore = [_persistentStoreCoordinator addPersistentStoreWithType:NSInMemoryStoreType
                                                                              configuration:nil
                                                                                        URL:nil
-                                                                                   options:nil
+                                                                                   options:options
                                                                                      error:&error];
                 if(!_persistentStore)
                 {
@@ -117,7 +117,8 @@
             //addPersistentStoreWithType failed and canDelete was false - this is where hard migrations should happen
         }
     }
-    else
+    
+    if(_persistentStore)
     {
         NSError * excludeError = nil;
         [storeURL setResourceValue:@YES
@@ -144,6 +145,7 @@
         _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
         
         _canDeleteOnFail = deletable;
+        _databaseName = databaseName;
     }
     return self;
 }
@@ -155,6 +157,7 @@
     {
         _managedObjectModel = model;
         _canDeleteOnFail = deletable;
+        _databaseName = databaseName;
     }
     return self;
 }
